@@ -5,7 +5,7 @@ type PrivateRouteTypes = {
   children: React.ReactNode
 }
 
-function PrivateRoute({ children }: PrivateRouteTypes) {
+function ProtectedRoutes({ children }: PrivateRouteTypes) {
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
@@ -15,4 +15,4 @@ function PrivateRoute({ children }: PrivateRouteTypes) {
   return children;
 }
 
-export default PrivateRoute;
+export default ProtectedRoutes;

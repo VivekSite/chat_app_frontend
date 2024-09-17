@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import { getCookie, deleteCookie } from "@/lib/cookieUtils";
-import { verifyToken } from "@/services/auth.service";
+import { getAuthStatus, LogOut, refreshToken } from "@/services/auth.service";
 import { User } from "@/types/types";
+import LoaderComponent from "@/components/LoaderComponent";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -10,55 +10,70 @@ type AuthProviderProps = {
 type AuthProviderState = {
   user: User | null;
   isLoggedIn: boolean;
-  setUser: (user: User) => void;
-  setIsLoggedIn: (value: boolean) => void;
+  checkAuthStatus: () => Promise<void>;
 };
 
 const initialState: AuthProviderState = {
   user: null,
   isLoggedIn: false,
-  setUser: () => null,
-  setIsLoggedIn: () => false
+  checkAuthStatus: async () => {},
 };
 
-export const AuthProviderContext = createContext<AuthProviderState>(initialState);
+export const AuthProviderContext =
+  createContext<AuthProviderState>(initialState);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const logout = () => {
-    deleteCookie('accessToken');
-    deleteCookie('refreshToken');
-
+  const logout = async () => {
+    await LogOut();
     setUser(null);
+    setIsLoggedIn(false);
+  };
+
+  const checkAuthStatus = async () => {
+    const response = await getAuthStatus();
+
+    if (response.success) {
+      setUser(response.auth);
+      setIsLoggedIn(true);
+    } else if (
+      response.message &&
+      response.message.includes("Expired signature")
+    ) {
+      const newResponse = await refreshToken();
+      if (newResponse.success) {
+        setUser(newResponse.auth);
+        setIsLoggedIn(true);
+      }
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    if (accessToken) {
-      console.log('Access token');
-      verifyToken(accessToken)
-        .then((payload) => {
-          setUser(payload);
-          setIsLoggedIn(true);
-        }).catch((error) => {
-          console.log('[Error while verifying token]' + error)
-        });
-    }
-  }, [user]);
+    checkAuthStatus();
+  }, []);
 
   const value = {
     logout,
     user,
-    setUser: () => null,
     isLoggedIn,
-    setIsLoggedIn: () => false
+    checkAuthStatus,
+  };
+
+  if (isLoading) {
+    return <LoaderComponent />;
   }
 
   return (
     <AuthProviderContext.Provider value={value}>
       {children}
     </AuthProviderContext.Provider>
-  )
+  );
 }

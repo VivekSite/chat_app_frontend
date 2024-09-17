@@ -35,10 +35,9 @@ export const SignInFormSchema = z.object({
   password: z
     .string()
     .trim()
-    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/, {
-      message:
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
-    }),
+    .min(8, {
+      message: "Password must be at least of 8 characters"
+    })
 });
 
 export const ResetPasswordFormSchema = z
