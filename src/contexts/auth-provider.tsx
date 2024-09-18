@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getAuthStatus, LogOut, refreshToken } from "@/services/auth.service";
-import { User } from "@/types/types";
+import { AuthUser } from "@/types/types";
 import LoaderComponent from "@/components/LoaderComponent";
 
 type AuthProviderProps = {
@@ -8,22 +8,24 @@ type AuthProviderProps = {
 };
 
 type AuthProviderState = {
-  user: User | null;
+  user: AuthUser | null;
   isLoggedIn: boolean;
   checkAuthStatus: () => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const initialState: AuthProviderState = {
   user: null,
   isLoggedIn: false,
   checkAuthStatus: async () => {},
+  logout: async () => {},
 };
 
 export const AuthProviderContext =
   createContext<AuthProviderState>(initialState);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

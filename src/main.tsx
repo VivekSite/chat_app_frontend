@@ -6,15 +6,18 @@ import { ThemeProvider } from "./contexts/theme-provider.tsx";
 import { SocketProvider } from "./contexts/socket-provider.tsx";
 import { AuthProvider } from "./contexts/auth-provider.tsx";
 import { Toaster } from "./components/ui/toaster.tsx";
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
     <SocketProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <StrictMode>
-          <App />
-          <Toaster />
-        </StrictMode>
+        <TooltipProvider>
+          <StrictMode>
+            <App />
+            <Toaster />
+          </StrictMode>
+        </TooltipProvider>
       </ThemeProvider>
     </SocketProvider>
   </AuthProvider>

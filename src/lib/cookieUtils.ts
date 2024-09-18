@@ -18,4 +18,6 @@ export function setCookie(name: string, value: string, days: number) {
 
 export function deleteCookie(name: string) {
   setCookie(name, '', -1);
+
+  
 }

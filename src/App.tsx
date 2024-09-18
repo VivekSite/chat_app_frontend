@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ProtectedRoutes from "./guards/ProtectedRoutes";
@@ -9,17 +9,20 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/sign_in" element={<SignIn />} />
         <Route path="/sign_up" element={<SignUp />} />
         <Route path="/reset_password" element={<SignUp />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoutes>
-              <HomePage />
-            </ProtectedRoutes>
-          }
-        />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoutes />} >
+          <Route path="/" element={<HomePage />} />
+          <Route path="/conversations" element={<HomePage />} />
+          <Route path="/conversations/:conversationId" element={<HomePage />} />
+        </Route>
+
+        {/* Catch-all route */}
+        <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
     </BrowserRouter>
   );

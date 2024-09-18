@@ -1,4 +1,4 @@
-export type User = {
+export type AuthUser = {
   id: string;
   email: string;
   name: string;
@@ -12,3 +12,14 @@ export type User = {
 } | null;
 
 
+export type MongoUser = {
+  _id: string;
+  username: string;
+  email: string;
+  mobile?: string;
+  profileImage?: string;
+  isEmailVerified: boolean;
+  isMobileVerified: boolean;
+  updated_at: number;
+  created_at: number;
+}
