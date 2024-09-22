@@ -10,8 +10,7 @@ const UsersList = () => {
       {users.map((user) => (
         <UserBox
           key={user._id}
-          username={user.username}
-          avatar={user.profileImage || ""}
+          user={user}
         />
       ))}
     </>
