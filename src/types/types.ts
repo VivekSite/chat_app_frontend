@@ -23,3 +23,30 @@ export type MongoUser = {
   updated_at: number;
   created_at: number;
 }
+
+export type Message = {
+  _id: string,
+  body: string;
+  image: string;
+  seenIds: string[];
+  conversationId: string;
+  senderId: string;
+  updated_at: number;
+  created_at: number;
+}
+
+export type Conversation = {
+  _id: string;
+  name: string;
+  userIds: MongoUser[];
+  createdBy: string;
+  
+  isGroup: boolean;
+  groupName: string;
+  admins: string[];
+  profileImage: string;
+  lastMessage: Message;
+  messages: Message[];
+  updated_at: number;
+  created_at: number;
+}

@@ -33,7 +33,7 @@ const ResetPassword = () => {
     <Form {...ResetPasswordForm}>
       <form
         onSubmit={ResetPasswordForm.handleSubmit(handleResetPassword)}
-        className="flex flex-col gap-5 sm:w-[25rem] sm:ml-[50%] sm:translate-x-[-50%] sm:mt-16"
+        className="flex flex-col gap-5 sm:w-[25rem] sm:ml-[50%] sm:translate-x-[-50%] px-16 py-5 sm:px-0 sm:py-0 sm:pt-16"
       >
 
         {/* Field for Password */}

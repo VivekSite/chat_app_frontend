@@ -19,8 +19,14 @@ export const SocketProviderContext =
 
 export function SocketProvider({ children }: SocketProviderProps) {
   const [socket, setSocket] = useState<null | WebSocket>(null);
+  const url: string = `ws://localhost:8080`;
 
-  useEffect(() => {}, [socket]);
+  useEffect(() => {
+    if (!socket) {
+      const newWSConnection = new WebSocket(url);
+      setSocket(newWSConnection);
+    }
+  }, [socket, url]);
 
   const value = {
     socket,

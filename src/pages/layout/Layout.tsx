@@ -8,7 +8,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex h-screen p-[1rem] lg:p-[2rem]">
+    <div className="flex h-screen p-[1rem]">
       <PrimarySideBar />
       <SecondarySideBar />
       <EmptySpace>{children}</EmptySpace>

@@ -16,7 +16,7 @@ import { SignUpFormSchema } from "./formSchema";
 import { handleClipboardEvents } from "@/lib/formUtils";
 import { signUp } from "@/services/auth.service";
 import { toast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts";
+import { useAuth } from "@/hooks";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const SignUp = () => {
     <Form {...SignUpForm}>
       <form
         onSubmit={SignUpForm.handleSubmit(handleSignUp)}
-        className="flex flex-col gap-5 sm:w-[25rem] sm:ml-[50%] sm:translate-x-[-50%] sm:mt-16"
+        className="flex flex-col gap-5 sm:w-[25rem] sm:ml-[50%] sm:translate-x-[-50%] px-16 py-5 sm:px-0 sm:py-0 sm:pt-16"
       >
         {/* Field for Username */}
         <FormField

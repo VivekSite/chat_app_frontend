@@ -3,16 +3,18 @@ import {
   ArrowLeft,
   LogOut,
   MessageCircleMore,
+  Plus,
   Settings,
   User,
   Users,
 } from "lucide-react";
 import IconContainer from "@/components/IconContainer";
 import { ModeToggle } from "@/components/ui/mode-toggler";
-import { useAuth } from "@/contexts";
+import { useAuth } from "@/hooks";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AvatarFallback } from "@/components/ui/avatar";
 import cpp_logo from "@/assets/images/cpp_logo.png";
+import { Separator } from "@/components/ui/separator";
 
 const PrimarySideBar = () => {
   const { logout } = useAuth();
@@ -21,7 +23,7 @@ const PrimarySideBar = () => {
   const { pathname } = location;
 
   return (
-    <div className="h-full w-[5rem] mr-[1rem] lg:mr-[2rem] p-1 rounded-[10px] bg-gray-100 dark:bg-[#171717] flex flex-col justify-between">
+    <div className="h-full w-[5rem] mr-[1rem] p-1 rounded-[10px] bg-gray-100 dark:bg-[#171717] flex flex-col justify-between">
       <div className="flex flex-col p-2 items-center">
         {/* Go Back Icon */}
         <IconContainer
@@ -35,7 +37,7 @@ const PrimarySideBar = () => {
         {/* Conversations Icon */}
         <IconContainer
           message="Conversations"
-          onClick={() => {}}
+          onClick={() => navigate("/conversations")}
           className={`${
             pathname.includes("/conversations") ? "dark:bg-purple-800" : ""
           }`}
@@ -46,10 +48,8 @@ const PrimarySideBar = () => {
         {/* Users Icon */}
         <IconContainer
           message="Users"
-          onClick={() => {}}
-          className={`${
-            pathname === "/" ? "dark:bg-purple-800" : ""
-          }`}
+          onClick={() => navigate("/")}
+          className={`${pathname === "/" ? "dark:bg-purple-800" : ""}`}
         >
           <Users className="text-gray-500 dark:text-gray-200" />
         </IconContainer>
@@ -57,6 +57,13 @@ const PrimarySideBar = () => {
         {/* LogOut Icon */}
         <IconContainer message="LogOut" onClick={logout}>
           <LogOut className="text-gray-500 dark:text-gray-200" />
+        </IconContainer>
+
+        <Separator className="m-2 border-2 dark:bg-[#171717]" />
+
+        {/* LogOut Icon */}
+        <IconContainer message="Create Group" onClick={() => {}}>
+          <Plus className="text-gray-500 dark:text-gray-200" />
         </IconContainer>
       </div>
       <div className="flex flex-col p-2 items-center">

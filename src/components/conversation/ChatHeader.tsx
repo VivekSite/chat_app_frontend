@@ -6,11 +6,12 @@ type ChatHeaderProps = {
   avatarImage: string;
   username: string;
   isOnline: boolean;
+  className?: string;
 };
 
-const ChatHeader = ({ avatarImage, username, isOnline }: ChatHeaderProps) => {
+const ChatHeader = ({ avatarImage, username, isOnline, className }: ChatHeaderProps) => {
   return (
-    <header className="h-14 dark:bg-gray-800 rounded-t-lg lg:rounded-l-[0] flex justify-between pr-3 pl-5 items-center">
+    <header className={`h-14 dark:bg-gray-800 rounded-t-lg lg:rounded-l-[0] flex justify-between pr-3 pl-5 items-center ${className}`}>
       <div className="flex gap-2 items-center">
         <Avatar className="size-10">
           <AvatarImage src={avatarImage} width={35} />

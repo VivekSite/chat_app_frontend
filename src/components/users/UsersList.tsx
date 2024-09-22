@@ -1,25 +1,8 @@
-import { useEffect, useState } from "react";
 import UserBox from "./UserBox";
-import { MongoUser } from "@/types/types";
-import { getAllUsers } from "@/services/user.service";
-import { useLocation } from "react-router-dom";
+import { useData } from "@/hooks";
 
 const UsersList = () => {
-  const [users, setUsers] = useState<MongoUser[] | []>([]);
-  const location = useLocation();
-  const { pathname } = location;
-
-  const fetchUsers = async () => {
-    const response = await getAllUsers();
-
-    if (response.success) {
-      setUsers(response.users);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const { users } = useData();
 
   return (
     <>
@@ -27,11 +10,8 @@ const UsersList = () => {
       {users.map((user) => (
         <UserBox
           key={user._id}
-          isActive={pathname.includes(`/conversations/${user._id}`)}
           username={user.username}
           avatar={user.profileImage || ""}
-          lastMessage=""
-          lastMessageTime={user.created_at}
         />
       ))}
     </>

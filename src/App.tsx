@@ -4,6 +4,7 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ProtectedRoutes from "./guards/ProtectedRoutes";
 import HomePage from "./pages/HomePage";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/sign_in" element={<SignIn />} />
         <Route path="/sign_up" element={<SignUp />} />
-        <Route path="/reset_password" element={<SignUp />} />
+        <Route path="/reset_password" element={<ResetPassword />} />
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />} >
